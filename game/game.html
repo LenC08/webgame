@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Game</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='game.css'>
+  <script src="https://kit.fontawesome.com/f6018ad0a0.js" crossorigin="anonymous">
+
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="game.js">
+  </script>
+  <script src="timer.js">
+  </script>
+</head>
+
+<body>
+  <div class="relative_div">
+    <div class="holder">
+      
+        <span id="timer"></span>
+      <div id= "popup-container">
+       <div id="popup" class="animate__animated">
+        <h2 class= "popup-title"> Als je deze instructies volgt, kan er niets misgaan. </h2>
+        <ul class= "popup-inhoud">
+          <li>Gebruik <b><u> geen eenheden</u></b> in je antwoord.</li>
+          <li>Gebruik altijd <b>','</b> om een <b><u>decimaal</u></b> aan te geven.</li>
+          <li>Als het antwoord een <b><u>woord</u></b> is, gebruik dan altijd een <b><u>hoofdletter</u></b>.</li>
+          <li>Als je het spel start, gaat een <b><u>timer</u></b> van <b><u>40 minuten</u></b> in werking. Als je het spel binnen deze tijd niet afwerkt, is het <b>GAME OVER</b>.</li>
+        </ul>
+        <input id="okay-button" type="button" value="Ik snap het!" onclick="hidePopUp();"></button>
+       </div>
+      </div>
+
+      <div class="vraag-cloud">
+        <div class="vraag-cloud-bottom">          
+           <div id="question">Lorem ipsum</div>                    
+        </div>
+        <div class="vraag-cloud-top"></div>
+      </div>  
+      
+      <div class="image-cloud">
+        <div class="image-cloud-bottom">
+          <img src="../game-art/monke.png" id="image-holder"></img> 
+        </div>
+        <div class="image-cloud-top"></div>
+      </div>
+
+         <div id="guess-cont">
+          <input id="answer" type="text" autocomplete="off"></input>
+          <img src="../game-art/check.png" id="check" onclick="submitGuess();"></img>
+          </div>
+
+       <div id="levenscontainer">
+         <img src="https://i.imgur.com/QAvOSd9.png" class="leven" id="leven1"></img>
+         <img src="https://i.imgur.com/QAvOSd9.png" class="leven" id="leven2"></img>
+         <img src="https://i.imgur.com/QAvOSd9.png" class="leven" id="leven3"></img>
+         <img src="https://i.imgur.com/QAvOSd9.png" class="leven" id="leven4"></img>
+         <img src="https://i.imgur.com/QAvOSd9.png" class="leven" id="leven5"></img>
+       </div>
+
+       <img src="../game-art/character.png" class="character"></img>
+      
+        
+            
+    </div>
+  </div>
+</body>
+
+</html>

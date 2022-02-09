@@ -1,0 +1,158 @@
+/* Hier passen we de stijl, grootte en positie van alle onderdelen van het spel zelf aan.*/
+
+/*Algemeen*/
+
+
+html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: black;
+}
+
+body {
+  max-width: 177.778vh;
+  min-width: 500px;
+  width: 100%;
+  margin: 0;
+  
+}
+
+div.relative_div {
+  width: 100%;
+  padding-bottom: 56.25%; 
+  position: relative;
+  background: url("../game-art/world_one.jpg");
+  background-size: contain;
+}
+
+div.relative_div > div.holder {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+}
+
+.holder {
+  visibility: hidden;
+}
+
+.holder>* {
+  position: absolute;
+}
+
+#popup-container {
+  visibility: visible !important;
+}
+
+.character {
+  width: 15%;
+  margin-top: 28%;
+  margin-left: 10%;
+}
+
+.vraag-cloud {
+  margin-top: 2.5%;
+  width: 35%;
+  height: 28%;
+  margin-left: 15%;
+}
+
+.vraag-cloud-bottom{ 
+  position: absolute;
+  margin-top: 18%;
+  width: 100%;
+  height: 66%;
+  background:#ECEFF1;
+  border-radius:100px;
+  display: flex;
+  align-items: center;
+}
+
+.vraag-cloud-top {
+  position: absolute;
+  height: 100%;
+  margin-left: 30%;
+  width: 60%;
+  border-radius: 100%;
+  background-color: #ECEFF1;
+  margin-top: 3%;
+ 
+}
+
+.image-cloud {
+  height: 30%;
+  width: 20%;
+  margin-left: 60%;
+  margin-top: 2%;
+}
+
+.image-cloud-bottom {
+  position: absolute;
+  background-color: #ECEFF1;
+  height: 65%;
+  width: 100%;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 19%;
+}
+
+.image-cloud-top {
+  position: absolute;
+  height:50%;
+  background-color: #ECEFF1;
+  width: 60%;
+  border-radius: 100%;
+  margin-left: 10%;
+}
+
+#question {
+  position: absolute;
+  margin: 0% 8%;
+  font-size: 1vw;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  z-index: 9;
+}
+
+#image-holder {
+  height: 90%;
+  width: 50.1%;
+  z-index: 9;
+}
+
+#image-holder:hover {
+  transform: scale(2);
+}
+
+#guess-cont {
+  margin-top: 50%;
+  width: 40%;
+  height: 8%;
+  display: flex;
+  margin-left: 30%;
+}
+
+#answer {
+  width: 80%;
+  height: 100%;
+  border: none;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 2.5vw;
+  text-align: center;
+  
+}
+
+#check {
+  height: 100%;
+  margin-left: 5%;
+  cursor: pointer;
+}
+
+
+
+
+

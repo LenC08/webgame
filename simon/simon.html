@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Game</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' type='text/css' media='screen' href='simon.css'>
+	<script src="https://kit.fontawesome.com/f6018ad0a0.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	
+</head>
+<body>
+<button id="startknop" class= "startknop" onclick="startGame()">START</button>
+<div id="levenscontainer">
+  <img src="https://i.imgur.com/QAvOSd9.png" class="simon-leven" id="simon-leven1"></img>
+  <img src="https://i.imgur.com/QAvOSd9.png" class="simon-leven" id="simon-leven2"></img>
+  <img src="https://i.imgur.com/QAvOSd9.png" class="simon-leven" id="simon-leven3"></img>
+  <img src="https://i.imgur.com/QAvOSd9.png" class="simon-leven" id="simon-leven4"></img>
+  <img src="https://i.imgur.com/QAvOSd9.png" class="simon-leven" id="simon-leven5"></img>
+</div>
+<div class="knopcontainer onklikbaar">
+  <div class="box">
+    <div id="rozeknop" class="knop" data-knop="roze"></div>
+  </div>
+  <div class="box">
+    <div id="groeneknop" class="knop" data-knop="groen"></div>
+  </div>
+  <div class="box">
+    <div id="blauweknop" class="knop" data-knop="blauw"></div>
+  </div>
+  <div class="box">
+    <div id="rodeknop" class="knop" data-knop="rood"></div>
+  </div>
+  <div class="box">
+    <div id="geleknop" class="knop" data-knop="geel"></div>
+  </div>
+</div>
+
+
+
+<audio src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" data-sound="roze" ></audio>
+<audio src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" data-sound="groen" ></audio>
+<audio src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" data-sound="blauw" ></audio>
+<audio src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" data-sound="rood" ></audio>
+<audio src="https://www.soundsnap.com/node/29072.mp3" data-sound="geel"></audio>
+
+
+<audio src="https://youtu.be/2naim9F4010.mp3" data-sound="fout"></audio>
+
+
+
+<script src="simon.js"></script>
+</body>
+
+</html>
