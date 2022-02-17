@@ -45,11 +45,27 @@ const questions = [{
   antwoord: "A"
 }]
 
-//document ready functie (doet dingen wanneer de website laadt)
+//document ready functie (doet dingen wanneer de website inlaadt of dingen die je altijd wil laten luisteren voor veranderingen)
 $(document).ready(function () {
 
   $("#question").text(questions[0].vraag);
   $("#popup").addClass("animate__fadeInUp");
+
+//enter werkt
+  let input = document.getElementById("answer")
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        submitGuess();
+      }
+    });
+
+//luistert voor einde van animatie
+  const element = document.getElementById('vraag-cloud')
+  element.addEventListener("animationend", function() {
+    $(".vraag-cloud").removeClass("animate__fadeInLeft animate__animated animate__slower")
+    $(".image-cloud").removeClass("animate__fadeInLeft animate__animated animate__slower")
+  })
 
 });
 
@@ -88,7 +104,7 @@ function gameOver() {
 //functie die een leven weghaalt bij fout antwoord
 function loseLife() {
   if (lifeAmount >= 2) {
-    $("#leven" + lifeAmount).addClass("animate__zoomOutRight animate__animated")
+    $("#leven" + lifeAmount).addClass("animate__zoomOutLeft animate__animated")
     lifeAmount--
   } else if (lifeAmount == 1) {
     gameOver()
@@ -105,16 +121,9 @@ function submitGuess() {
   if (answer == "") {
     return
   } else if (answer === questions[i].antwoord) {
-    $("#char").css({
-      "animation": "y-as" + i + " 1s cubic-bezier(0.57, -0.03, 0.56, 1.18)",
-      "animation-fill-mode": "forwards"
-    });
-    $("#img-cont").css({
-      "animation": "x-as" + i + " 1s cubic-bezier(1,1,1,1)",
-      "animation-fill-mode": "forwards"
-    });
-    $("#question").text(questions[i + 1].vraag);
-    $("#image-holder").attr("src", questions[i + 1].tekening);
+    $(".vraag-cloud").animate({right: '-40vw'}, 5000)
+    $(".image-cloud").animate({right: '-50vw'}, 5000, animationEnd)
+    
     i++
   } else {
     loseLife();
@@ -123,6 +132,18 @@ function submitGuess() {
   $("#answer").val("")
 
 }
+
+
+function animationEnd() {
+
+  $('.vraag-cloud').css({'right' : '44vw', 'visibility':'hidden'});
+  $('.image-cloud').css({'right' : '17vw', 'visibility':'hidden'});
+  $("#question").text(questions[i + 1].vraag);
+  $("#image-holder").attr("src", questions[i + 1].tekening);
+  $('.vraag-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'});
+  $('.image-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'});
+}
+
 
 
 
