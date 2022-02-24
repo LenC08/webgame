@@ -153,11 +153,18 @@ div.relative_div > div.holder {
   cursor: pointer;
 }
 
+#levenscontainer {
+  width: 10%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
 .leven {
-  width: 7%;
+  height: 20%;
+  width: 10vh;
   margin-left: 3%;
   margin-top: 2%;
-  display: flex;
 }
 
 
