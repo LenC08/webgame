@@ -1,7 +1,7 @@
 
 // Lijst van vragen die aanwezig zijn in het spel
 const questions = [{
-  vraag: "We laten een bal vallen vanaf een hoogte van 50 meter. Deze beweging wordt weergegeven in de functie h(t)= -7t + 50. Voor welke t-waarde bevindt de bal zich op een hoogte van 0 meter? Rond af op 1 decimaal.",
+  vraag: "We laten een bal vallen vanaf een hoogte van 50 meter. Deze beweging wordt weergegeven door de functie h(t)= -7t + 50. Voor welke t-waarde bevindt de bal zich op een hoogte van 0 meter? Rond af op 1 decimaal.",
   antwoord: "7,1",  
   tekening: "../game-art/oefening1.jpg"  
   }, {  
@@ -17,7 +17,7 @@ const questions = [{
   antwoord: "192,65",  
   tekening: "../game-art/oefening4.jpg"  
   }, {  
-  vraag:"2 jojo’s vallen en gaan terug naar boven . De eerste volgt de functie f(x) = x² - 17x + 4 en de 2de g(x) = 7x² - 6. Op welke x-coördinaat snijden deze banen elkaar? Antwoord met de positieve uitkomst.",  
+  vraag:"2 jojo’s vallen en gaan terug naar boven . De eerste volgt de functie f(x) = x² - 17x + 4 en de 2de g(x) = 7x² - 6. Op welke x-coördinaat snijden deze banen elkaar? Antwoord met de positieve uitkomst en geef deze weer in decimalen.",  
   antwoord: "0,5",
   tekening: "../game-art/oefening5.jpg"   
   }, {  
@@ -49,10 +49,6 @@ const questions = [{
   antwoord: "8,1",
   tekening: "../game-art/oefening12.jpg"   
   }, {  
-  vraag: "Welke van deze uitspraken is niet correct bij onderstaande figuur:\nA: B en P zijn niet gelijk\nB: K en F zijn niet gelijk\nC: A en G zijn niet gelijk\nD: F en N zijn niet gelijk",  
-  antwoord: "A",
-  tekening: "../game-art/oefening13.png"  
-  }, {  
   vraag: "Bepaal de zijde van een vierkant dat dezelfde oppervlakte heeft als een cirkel met diameter 12 (tot op 1 decimaal)",  
   antwoord: "10,6",
   tekening: "../game-art/oefening14.jpeg"   
@@ -65,8 +61,27 @@ const questions = [{
   // Enkele variablen die we nodig hebben
   let antwoord = ""
   let vraagIndex = ""
-  let vraagCounter = 0;
+  let vraagCounter = 0
   let lifeAmount = 5
+  let enemiesKilled = 0
+  let world = 1
+
+  let worldDetails = [{
+    enemy: "../game-art/enemy1.png",
+    wereld: "../game-art/world-one.jpg",
+    textkleur: "black",
+    wolkkleur: "#ECEFF1"
+  }, {
+    enemy: "../game-art/enemy2.png",
+    wereld: "../game-art/world-two.png",
+    textkleur:"orange",
+    wolkkleur: "#af0a0a"
+  }, {
+    enemy: "../game-art/enemy3.png",
+    wereld: "../game-art/world-three.png",
+    textkleur: "black",
+    wolkkleur: "#ECEFF1"
+  }]
 
 //Document.ready functie : doet dingen wanneer de pagina voor het eerst inlaadt, maar wordt ook gebruikt om te luisteren voor bepaalde veranderingen
 $(document).ready(function () {
@@ -96,16 +111,12 @@ $(document).ready(function () {
 
  // Functie om een random vraag te kiezen uit onze lijst met vragen
 function randomVraag() {
-  if (vraagCounter == 5) { // Wanneer de gebruiker 5 vragen heeft opgelost, willen we naar het eindspel gaan
-    window.location.href = "../simon/simon.html"
-  } else { //Als dat niet zo is, stellen we de volgende vraag in
     let newVraagIndex = Math.floor(Math.random() * questions.length) //We maken een willekeurige nieuwe index door middel van een willekeurig getal tussen 0 en 1 te nemen, dit te vermenigvuldigen met het aantal vragen in onze lijst en ten slotte dit getal af te ronden naar boven (vb 0.8 * vraag 12 = 9.6 => index 10)
     $("#question").text(questions[newVraagIndex].vraag); //Veranderen de oude vraag naar de nieuwe vraag
     $("#image-holder").attr("src", questions[newVraagIndex].tekening); //Veranderen de oude afbeelding naar de nieuwe afbeelding
     antwoord = questions[newVraagIndex].antwoord; //Veranderen het oude juiste antwoord naar het nieuwe juiste antwoord
     vraagIndex = newVraagIndex; // We updaten onze vraagIndex variable
-    vraagCounter++ //We vertellen de computer dat we naar de volgende vraag zijn
-  }  
+    vraagCounter++ //We vertellen de computer dat we naar de volgende vraag gaan
 }
 
 //doet de animaties na het verbergen van de popup (is nog niet echt geïmplementeerd nadat we de opmaak opnieuw waren begonnen)
@@ -128,7 +139,7 @@ function hidePopUp() {
 
 //Functie die iets doet wanneer de levens op zijn (nog niet af)
 function gameOver() {
-  $("body").remove();
+  alert("hier komt nog iets :)")
 }
 
 //Functie die een leven weghaalt bij fout antwoord
@@ -149,8 +160,23 @@ function submitGuess() {
   if (userAnswer == "") { // Als het vakje leeg is maar er wel op enter gedrukt is doen we niks (kan per ongeluk zijn)
     return
   } else if (userAnswer === antwoord) { // Als het antwoord goed is
-    $(".vraag-cloud").animate({right: '-40vw'}, 5000) //Wolkanimatie
-    $(".image-cloud").animate({right: '-50vw'}, 5000, animationEnd) //Wolkanimatie
+    $(".vraag-cloud").animate({left: '130%'}, 6000) //Wolkanimatie
+    $(".image-cloud").animate({left: '130%'}, 6000, wolkAnimationEnd) //Wolkanimatie
+
+    let animationDetails = [{ //We gebruiken een lijst om de computer te vertellen hoe het mannetje moet opchuiven voor alle verschillende enemies
+      xDiff: "52%",
+      yDiff: "33%"
+    }, {
+      xDiff: "55%",
+      yDiff: "7%",
+    }, {
+      xDiff: "64%",
+      yDiff: "22%"
+    }]
+
+    $(".character").animate({left: animationDetails[enemiesKilled].xDiff, bottom: animationDetails[enemiesKilled].yDiff}, 2000, characterMoveEnd) //We gebruiken de eerder gemaakte animationdetails om ons character te verschuiven
+    enemiesKilled++
+
   } else { // Als het fout is verlies je een leven
     loseLife();
   }
@@ -159,15 +185,67 @@ function submitGuess() {
 }
 
 
-function animationEnd() { // Wanneer de wolkanimatie uit het scherm gedaan is doen we een nieuwe animatie waar er nieuwe wolken komen
-  $('.vraag-cloud').css({'right' : '44vw', 'visibility':'hidden'}); //Wolkanimatie
-  $('.image-cloud').css({'right' : '17vw', 'visibility':'hidden'}); //Wolkanimatie
-  questions.splice(vraagIndex, 1); // We verwijderen de vraag die net geweest is uit de vragenlijst zodat we niet twee keer dezelfde kunnen hebben
-  randomVraag(); //We voereb de randomvraag functie op niew uit
-  
-  $('.vraag-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
-  $('.image-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
+function wolkAnimationEnd() { // Wanneer de wolkanimatie uit het scherm gedaan is doen we een nieuwe animatie waar er nieuwe wolken komen
+
+  if (enemiesKilled == 3) { //Wanneer we drie mannetjes gedood hebben (= drie vragen goed hebben) gaan we naar de volgende wereld
+   $(".relative_div").fadeTo(2500, 0, function() { //We laten het scherm zwart worden en veranderen onze wereld elementen (= enemies, achtergrond)
+      $(".relative_div").css({'background' : 'url(' + worldDetails[world].wereld + ')' , 'background-size' : 'contain'}) //verandert de achtergrond
+      $(".enemy1, .enemy2, .enemy3").attr("src", worldDetails[world].enemy) //verandert de enemies
+
+      //zet de enemies terug op de juiste plek
+      $('.enemy1').animate({'left' : '0', 'bottom' : '50%'}, 1000);
+      $('.enemy2').animate({'left' : '0', 'bottom' : '-5%'}, 1000);
+      $('.enemy3').animate({'left' : '0', 'bottom' : '25%'}, 1000);   
+    })   
+    
+
+$(".relative_div").fadeTo(2500, 1, function() { // We laten de zwarte laag van het scherm verdwijnen zodat de gebruiker de nieuwe wereld ziet
+  $('.vraag-cloud-bottom, .vraag-cloud-top, .image-cloud-bottom, .image-cloud-top').css({"background-color" : worldDetails[world].wolkkleur , "color" : worldDetails[world].textkleur}) //verandert de kleur van de wolken
+  world++ //we vertellen de computer dat we nu in de volgende wereld zitten
+  wolkAnimationEnd() //We voeren deze functie opnieuw uit zodat de if functie in het begin deze keer false is, dit zodat we onderstaande wolkanimaties gaan doen
+})    
+    enemiesKilled = 0 // het aantal enemies dat we gedood hebben is opnieuw nul
+  } else {
+    $('.vraag-cloud').css({'left' : '0', 'visibility':'hidden'}); //Wolkanimatie
+    $('.image-cloud').css({'left' : '0', 'visibility':'hidden'}); //Wolkanimatie
+    questions.splice(vraagIndex, 1); // We verwijderen de vraag die net geweest is uit de vragenlijst zodat we niet twee keer dezelfde kunnen hebben
+    randomVraag(); //We voeren de randomvraag functie opnieuw uit
+    
+    $('.vraag-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
+    $('.image-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
+  }
 }
+
+function characterMoveEnd() { //Wanneer ons character verschoven is naar de enemie laten we hem de enemie aanvallen
+  //We draaien ons character rond zijn as om een soort schop-effect te krijgen
+  $('.character').animate(
+    { deg: -85 },
+    {duration: 500,
+      step: function(now) {
+        $(this).css({ transform: 'rotate(' + now + 'deg)' }); //We draaien het character rond een hoek van 85 graden
+        $('.enemy' + enemiesKilled).animate({left: "150%", bottom: "150%"}, 1000, killAnimationStop) //Wanneer de rotatie gedaan is laten we de vijand wegvliegen
+      }});
+
+   
+  $('.character').animate(
+    { deg: 0 },
+    {duration: 500,
+      step: function(now) {
+        $(this).css({ transform: 'rotate(' + now + 'deg)' }); //We draaien het character terug recht
+      }});
+  $('.character').animate({left: "0", bottom: "23%"}, 2000).promise().done(function(){ //Ons character gaat terug naar zijn originele plaats
+    if (vraagCounter == 9) { // Wanneer de gebruiker 9 vragen heeft opgelost, willen we naar het eindspel gaan
+    window.location.href = "../simon/simon.html"
+   }
+ })
+}
+  
+    function killAnimationStop() { //We zorgen ervoor dat de vijanden niet oneindig blijven doorvliegen als ze weggetrapt worden
+      $('.enemy' + enemiesKilled).stop(true)      
+    }
+
+
+
 
 
 

@@ -21,9 +21,10 @@
 </head>
 
 <body>
-  <div class="relative_div">
+ 
+    <div class="relative_div">   
     <div class="holder">
-      
+      <div id = "overlay"></div>
         <span id="timer"></span>
       <div id= "popup-container">
        <div id="popup" class="animate__animated">
@@ -53,6 +54,12 @@
         <div class="image-cloud-top"></div>
       </div>
 
+      <div class = "enemy-container">
+        <img class= "enemy enemy1" id= "enemy1" src="../game-art/enemy1.png"></img>
+        <img class= "enemy enemy3" id= "enemy2" src="../game-art/enemy1.png"></img>
+        <img class= "enemy enemy2" id= "enemy3" src="../game-art/enemy1.png"></img>
+      </div>
+
          <div id="guess-cont">
           <input id="answer" type="text" autocomplete="off"></input>
           <img src="../game-art/check.png" id="check" onclick="submitGuess();"></img>
@@ -66,12 +73,13 @@
          <img src="../game-art/leven.png" class="leven" id="leven5"></img>
        </div>
 
-       <img src="../game-art/character.png" class="character"></img>
+       <img src="../game-art/character.png" class="character" id = "character"></img>
       
         
             
     </div>
   </div>
+
 </body>
 
 </html>

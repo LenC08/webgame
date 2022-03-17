@@ -20,6 +20,7 @@
   }
 
   function resetSpel() { //Functie wanneer je de foute kleur kiest
+    foutGeluid.play() //Speel geluidje af wanneer het fout is
     alert("GAME OVER")
     //We resetten het spel
     volgorde = [] 
@@ -29,7 +30,7 @@
     knopContainer.classList.add("onklikbaar") //Knopjes zijn niet klikbaar tot je terug op start duwt
     loseLife() //Er gaat een leven af
     $("#startknop").css({"visibility": "visible"}) //Startknop is terug zichtbaar
-    foutGeluid.play() //Speel geluidje af wanneer het fout is(werkt nog niet)
+    
     
   }
 
@@ -38,10 +39,10 @@
   }
 
   function activeerKnop(color) { //Functie wanneer er een knop geactiveerd (= ingedrukt) wordt
-    const knop = document.querySelector(`[data-knop="${color}"]`) //We vertellen de computer welke van de vijf knoppen dat is
+    const knop = document.querySelector(`[data-knop="${color}"]`) //We vertellen de computer welke van de vijf knoppen dat het is
     const sound = document.querySelector(`[data-sound="${color}"]`) //We vertellen de computer welk geluidje er bij die knop hoort
     
-    sound.play() //speel het geluidje af van die knop
+    sound.play() //Speel het geluidje af van die knop
     knop.classList.add("geactiveerd") //Laat de knop "visueel" ingedrukt worden
 
     setTimeout(() => { //De knop blijft voor 0.3 seconden ingedrukt

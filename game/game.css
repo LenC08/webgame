@@ -24,7 +24,7 @@ div.relative_div {
   width: 100%;
   padding-bottom: 56.25%; 
   position: relative;
-  background: url("../game-art/world_one.jpg");
+  background: url("../game-art/world-one.jpg");
   background-size: contain;
 }
 
@@ -63,7 +63,7 @@ div.relative_div > div.holder {
   margin-top: 18%;
   width: 100%;
   height: 66%;
-  background:#ECEFF1;
+  background-color:#ECEFF1;
   border-radius:100px;
   display: flex;
   align-items: center;
@@ -166,6 +166,29 @@ div.relative_div > div.holder {
   margin-left: 3%;
   margin-top: 2%;
 }
+
+.enemy-container {
+  height: 50%;
+  margin-top: 25%;
+  margin-left: 70%;
+  width: 25%;
+}
+
+.enemy {
+  position: absolute;
+  width: 60%;
+}
+
+.enemy3 {
+  margin-left: 50%;  
+  margin-top: 25%;
+}
+
+.enemy2 {
+  margin-left: 15%;  
+  margin-top: 60%;
+}
+
 
 
 
