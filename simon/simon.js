@@ -27,7 +27,7 @@
     let data = JSON.parse(localStorage.getItem('myStorage'));
     let scoreDeel1 = data.score
     score = simonPunten + scoreDeel1
-    document.getElementById('uitleg').innerHTML = "Proficiat! Met dit spel hebben jullie <b>" + simonPunten + "</b> extra punten verdient. Dit brengt jullie op een totaal van <b>" + score + "</b> punten! Nu is het tijd om jullie resultaat in te dienen, verzin nog snel een teamnaam en geef je score door aan een van de begeleiders.<br><br>Bedankt om mee te doen!"
+    document.getElementById('uitleg').innerHTML = "Proficiat! Met dit spel hebben jullie <b>" + simonPunten + "</b> extra punten verdiend. Dit brengt jullie op een totaal van <b>" + score + "</b> punten! Nu is het tijd om jullie resultaat in te dienen, verzin nog snel een teamnaam en geef je score door aan een van de begeleiders.<br><br>Bedankt om mee te doen!"
     $("#okay-button").css({"display": "none"})
     $("#uitleg").css({"font-size" : "2vw"})
     $('#levenscontainer, #rondeCounter, #startknop, .knopcontainer').addClass("animate__animated animate__fadeOut")
