@@ -65,6 +65,7 @@ const questions = [{
   let lifeAmount = 5
   let enemiesKilled = 0
   let world = 1
+  let score = 0
 
   let worldDetails = [{
     enemy: "../game-art/enemy1.png",
@@ -85,10 +86,8 @@ const questions = [{
 
 //Document.ready functie : doet dingen wanneer de pagina voor het eerst inlaadt, maar wordt ook gebruikt om te luisteren voor bepaalde veranderingen
 $(document).ready(function () {
-
   randomVraag() //We voeren de randomVraag functie uit om de eerste vraag te bepalen
-
-  $("#popup").addClass("animate__fadeInUp"); // Laat pop-up met uitleg tevoorschijn komen 
+  $("#popup-container").addClass("animate__fadeInUp animate__animated"); // Laat pop-up met uitleg tevoorschijn komen 
 
   //We zorgen ervoor dat je ook door op enter te drukken een antwoord kan inleveren:
   let input = document.getElementById("answer") //We vertellen de computer dat we voor veranderingen moeten luisteren in het tekstvakje waar we het antwoord ingeven
@@ -104,6 +103,11 @@ $(document).ready(function () {
   element.addEventListener("animationend", function() {
     $(".vraag-cloud").removeClass("animate__fadeInLeft animate__animated animate__slower")
     $(".image-cloud").removeClass("animate__fadeInLeft animate__animated animate__slower")
+  })
+
+  const popup = document.getElementById('popup-container')
+  popup.addEventListener("animationend", function(){
+    $("#popup-container").removeClass("animate__animated animate__fadeInUp animate__fadeOutUp")
   })
 
 }); // Einde van de document.ready functie
@@ -122,24 +126,28 @@ function randomVraag() {
 //doet de animaties na het verbergen van de popup (is nog niet echt geïmplementeerd nadat we de opmaak opnieuw waren begonnen)
 
 function hidePopUp() {
-
-  $("#popup-container").slideUp(1000, function () {
-    $(".holder").css({ "visibility": "visible" })
-    $("#uithangbord").addClass("animate__backInDown animate__animated")
-
-    $(".uithangbord").one("animationend", () => {
-      $("#char").css({ "visibility": "visible" })
-      $("#char").addClass("animate__lightSpeedInLeft animate__animated")
-      timerStart()
-    });
-
-  });
+  $("#popup-container").addClass("animate__animated animate__fadeOutUp")
+  const popup = document.getElementById('popup-container')
+  popup.addEventListener("animationend", function(){
+    $("#popup-container").removeClass("animate__animated animate__fadeInUp animate__fadeOutUp")
+    timerStart()
+    $('.holder').css({"visibility": "visible"})
+    $("#popup-container").css({"display" : "none"})
+  }, {once : true})
 }
 
 
 //Functie die iets doet wanneer de levens op zijn (nog niet af)
 function gameOver() {
-  alert("hier komt nog iets :)")
+   //We laten het scherm zwart worden en veranderen onze wereld elementen (= enemies, achtergrond)
+    document.getElementById('uitleg').innerHTML = "Oei!<br><br> Het lijkt erop dat je levens op zijn of dat de timer verstreken is, maar niet getreurd het is nog niet gedaan! De punten die je tot nu toe verdiend hebt worden opgeslagen en wanneer je op onderstaande knop drukt zul je naar het volgende spel gaan waar nog heel wat punten te verdienen zijn.<br><br> Veel succes!"
+    $("#okay-button").attr("onclick", "window.location.href = '../simon/simon.html'").val("Ga verder")
+    $("#uitleg").css({"font-size" : "2vw"})
+    $('.holder').addClass("animate__animated animate__fadeOut")
+    $("#popup-container").css({"display" : "flex", "background-color" : worldDetails[world - 1].wolkkleur, "color" : worldDetails[world - 1].textkleur, "font-size" : "1.4vw"}).addClass("animate__animated animate__fadeInUp")
+    let data = {score: score}
+    localStorage.setItem('myStorage', JSON.stringify(data));
+    
 }
 
 //Functie die een leven weghaalt bij fout antwoord
@@ -148,6 +156,8 @@ function loseLife() {
     $("#leven" + lifeAmount).addClass("animate__zoomOutLeft animate__animated") //Haalt een leven weg van het scherm
     lifeAmount-- // We updaten ons aantal levens (er gaat 1 van af)
   } else if (lifeAmount == 1) { // Als we wel op het laatste leven zitten
+    $("#leven" + lifeAmount).addClass("animate__zoomOutLeft animate__animated") //Haalt een leven weg van het scherm
+    lifeAmount--
     gameOver()
   }
 }
@@ -159,7 +169,9 @@ function submitGuess() {
 
   if (userAnswer == "") { // Als het vakje leeg is maar er wel op enter gedrukt is doen we niks (kan per ongeluk zijn)
     return
-  } else if (userAnswer === antwoord) { // Als het antwoord goed is
+  } else if (userAnswer === antwoord || userAnswer == "admin") { // Als het antwoord goed is
+    score = score + 200
+    document.getElementById('score').innerHTML = "score : " + score; 
     $(".vraag-cloud").animate({left: '130%'}, 6000) //Wolkanimatie
     $(".image-cloud").animate({left: '130%'}, 6000, wolkAnimationEnd) //Wolkanimatie
 
@@ -186,11 +198,12 @@ function submitGuess() {
 
 
 function wolkAnimationEnd() { // Wanneer de wolkanimatie uit het scherm gedaan is doen we een nieuwe animatie waar er nieuwe wolken komen
-
-  if (enemiesKilled == 3) { //Wanneer we drie mannetjes gedood hebben (= drie vragen goed hebben) gaan we naar de volgende wereld
-   $(".relative_div").fadeTo(2500, 0, function() { //We laten het scherm zwart worden en veranderen onze wereld elementen (= enemies, achtergrond)
+ console.log (world)
+  if (enemiesKilled == 3 && world < 4) { //Wanneer we drie mannetjes gedood hebben (= drie vragen goed hebben) gaan we naar de volgende wereld
+      $(".relative_div").fadeTo(2500, 0, function() { //We laten het scherm zwart worden en veranderen onze wereld elementen (= enemies, achtergrond)
       $(".relative_div").css({'background' : 'url(' + worldDetails[world].wereld + ')' , 'background-size' : 'contain'}) //verandert de achtergrond
       $(".enemy1, .enemy2, .enemy3").attr("src", worldDetails[world].enemy) //verandert de enemies
+      $("#score-container").css({"background-color" : worldDetails[world].wolkkleur})
 
       //zet de enemies terug op de juiste plek
       $('.enemy1').animate({'left' : '0', 'bottom' : '50%'}, 1000);
@@ -205,7 +218,7 @@ $(".relative_div").fadeTo(2500, 1, function() { // We laten de zwarte laag van h
   wolkAnimationEnd() //We voeren deze functie opnieuw uit zodat de if functie in het begin deze keer false is, dit zodat we onderstaande wolkanimaties gaan doen
 })    
     enemiesKilled = 0 // het aantal enemies dat we gedood hebben is opnieuw nul
-  } else {
+  } else if (world < 4) {
     $('.vraag-cloud').css({'left' : '0', 'visibility':'hidden'}); //Wolkanimatie
     $('.image-cloud').css({'left' : '0', 'visibility':'hidden'}); //Wolkanimatie
     questions.splice(vraagIndex, 1); // We verwijderen de vraag die net geweest is uit de vragenlijst zodat we niet twee keer dezelfde kunnen hebben
@@ -213,7 +226,7 @@ $(".relative_div").fadeTo(2500, 1, function() { // We laten de zwarte laag van h
     
     $('.vraag-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
     $('.image-cloud').addClass("animate__fadeInLeft animate__animated animate__slower").css({'visibility':'visible'}); //Wolkanimatie
-  }
+  } else return
 }
 
 function characterMoveEnd() { //Wanneer ons character verschoven is naar de enemie laten we hem de enemie aanvallen
@@ -235,7 +248,20 @@ function characterMoveEnd() { //Wanneer ons character verschoven is naar de enem
       }});
   $('.character').animate({left: "0", bottom: "23%"}, 2000).promise().done(function(){ //Ons character gaat terug naar zijn originele plaats
     if (vraagCounter == 9) { // Wanneer de gebruiker 9 vragen heeft opgelost, willen we naar het eindspel gaan
-    window.location.href = "../simon/simon.html"
+    world++
+    let tijdOver = document.getElementById("timer").innerHTML
+    let minutesOver = parseInt(tijdOver.slice(0,2))
+    let secondsOver = parseInt(tijdOver.slice(5,7))
+    let tijdsBonus = secondsOver * 2 + minutesOver * 120
+    let levensBonus = lifeAmount * 125
+    score = score + tijdsBonus + levensBonus
+    let data = {score: score}
+    localStorage.setItem('myStorage', JSON.stringify(data));
+    document.getElementById('uitleg').innerHTML = "Proficiat! Het lijkt erop dat jullie alle monsters hebben weten te verslaan, dit betekent dat jullie nog bonuspunten krijgen:<br><br>Jullie hadden nog <b>" + minutesOver + "</b> minuten en <b>" + secondsOver + "</b> seconden over waarvoor jullie <b>" + tijdsBonus + "</b> bonuspunten krijgen!<br><br>Jullie hadden nog <b>" + lifeAmount + "</b> levens over waarvoor jullie <b>" + levensBonus + "</b> bonuspunten krijgen!<br><br>Dit brengt jullie totale score op <b>" + score + "</b>! Maar het is nog niet gedaan en er zijn nog heel wat punten te verdienen!<br><br>Druk op de knop om naar het volgende deel te gaan"
+    $("#okay-button").attr("onclick", "window.location.href = '../simon/simon.html'").val("Ga verder")
+    $("#uitleg").css({"font-size" : "1.4vw"})
+    $('.holder').addClass("animate__animated animate__fadeOut")
+    $("#popup-container").css({"display" : "flex", "background-color" : worldDetails[world - 2].wolkkleur, "color" : worldDetails[world - 2].textkleur, "font-size" : "1.4vw"}).addClass("animate__animated animate__fadeInUp") 
    }
  })
 }

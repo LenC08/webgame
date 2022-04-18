@@ -9,16 +9,21 @@
 	<script src="https://kit.fontawesome.com/f6018ad0a0.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id= "popup-container">
+    <div id="uitleg">Welkom bij het tweede en laatste deel van ons spel! Nu spelen jullie het spel 'Simon'. Het doel van dit spel is om zoveel mogelijk juiste volgordes van kleuren te onthouden en in te drukken. Eerst toont de computer 1 kleur, bij de volgende beurt 2 kleuren, enzovoort. Als je een foute kleur ingeeft stopt deze beurt en gaat er een leven af. Jullie krijgen 3 pogingen die alle 3 mee tellen voor het aantal punten dat jullie zullen verdienen<br><br>Veel succes! </div>           
+    <input id="okay-button" type="button" value="Ik snap het!" onclick="hidePopUp();"></input>
+</div>
 <button id="startknop" class= "startknop" onclick="startGame()">START</button>
+<span id = "rondeCounter"></span>
 <div id="levenscontainer">
-  <img src="..//game-art/leven.png" class="simon-leven" id="simon-leven1"></img>
-  <img src="..//game-art/leven.png" class="simon-leven" id="simon-leven2"></img>
-  <img src="..//game-art/leven.png" class="simon-leven" id="simon-leven3"></img>
-  <img src="..//game-art/leven.png" class="simon-leven" id="simon-leven4"></img>
-  <img src="..//game-art/leven.png" class="simon-leven" id="simon-leven5"></img>
+  <div id="ronde1" class="ronde-cirkel">?</div>
+  <div id="ronde2" class="ronde-cirkel">?</div>
+  <div id="ronde3" class="ronde-cirkel">?</div>
 </div>
 <div class="knopcontainer onklikbaar">
   <div class="box">
@@ -41,7 +46,7 @@
 
 
 <audio src="../audio/do.wav" data-sound="roze" ></audio>
-<audio src="../audio/re" data-sound="groen" ></audio>
+<audio src="../audio/re.wav" data-sound="groen" ></audio>
 <audio src="../audio/mi.wav" data-sound="blauw" ></audio>
 <audio src="../audio/sol.wav" data-sound="rood" ></audio>
 <audio src="../audio/la.wav" data-sound="geel"></audio>

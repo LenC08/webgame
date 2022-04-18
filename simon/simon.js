@@ -2,33 +2,52 @@
   let volgorde = []
   let userVolgorde = []
   let ronde = 1
-  let lifeAmount = 5
+  let level = 0
+  let poging = 0
   const knopContainer = document.querySelector(".knopcontainer")
   const foutGeluid = document.querySelector (`[data-sound="fout"]`)
 
-  function gameEnd() { //Functie wanneer de game gedaan is (nog niet geïmplementeerd)
-    alert("hier moet nog iets komen :)")
-  }
+  $(document).ready(function() {
+    $("#popup-container").addClass("animate__fadeInUp animate__animated");
+  })
 
-  function loseLife() { //Zelfde als in game.js
-  if (lifeAmount >= 2) {
-     $("#simon-leven" + lifeAmount).addClass("animate__zoomOutRight animate__animated")
-      lifeAmount--
-    } else if (lifeAmount == 1) {
-      gameEnd()
-   }
+  function hidePopUp() {
+    $("#popup-container").addClass("animate__animated animate__fadeOutUp")
+    const popup = document.getElementById('popup-container')
+    popup.addEventListener("animationend", function(){
+      $("#popup-container").removeClass("animate__animated animate__fadeInUp animate__fadeOutUp")
+      $('body>*').css({"visibility": "visible"})
+      $("#popup-container").css({"display" : "none"})
+    }, {once : true})
+  }
+  
+  function gameEnd() { 
+    let totaal = parseInt(document.getElementById('ronde1').innerHTML) + parseInt(document.getElementById('ronde2').innerHTML) + parseInt(document.getElementById('ronde3').innerHTML)
+    let simonPunten = totaal * 15
+    let data = JSON.parse(localStorage.getItem('myStorage'));
+    let scoreDeel1 = data.score
+    score = simonPunten + scoreDeel1
+    document.getElementById('uitleg').innerHTML = "Proficiat! Met dit spel hebben jullie <b>" + simonPunten + "</b> extra punten verdient. Dit brengt jullie op een totaal van <b>" + score + "</b> punten! Nu is het tijd om jullie resultaat in te dienen, verzin nog snel een teamnaam en geef je score door aan een van de begeleiders.<br><br>Bedankt om mee te doen!"
+    $("#okay-button").css({"display": "none"})
+    $("#uitleg").css({"font-size" : "2vw"})
+    $('#levenscontainer, #rondeCounter, #startknop, .knopcontainer').addClass("animate__animated animate__fadeOut")
+    $("#popup-container").css({"display" : "flex"}).addClass("animate__animated animate__fadeInUp")
   }
 
   function resetSpel() { //Functie wanneer je de foute kleur kiest
     foutGeluid.play() //Speel geluidje af wanneer het fout is
-    alert("GAME OVER")
+    document.getElementById("ronde" + poging).innerHTML = level
     //We resetten het spel
     volgorde = [] 
     userVolgorde = []
     ronde = 0
+    level = 0
+
+    if (poging == 3) {
+      gameEnd()
+    }
 
     knopContainer.classList.add("onklikbaar") //Knopjes zijn niet klikbaar tot je terug op start duwt
-    loseLife() //Er gaat een leven af
     $("#startknop").css({"visibility": "visible"}) //Startknop is terug zichtbaar
     
     
@@ -66,6 +85,8 @@
 
   function volgendeRonde() { // Functie wanneer we naar de volgende ronde gaan
     ronde++ // We updaten onze ronde-variable
+    level++
+    document.getElementById("rondeCounter").innerHTML = "ronde: <b>" + level + "</b>"
     knopContainer.classList.add("onklikbaar") //Knopjes onklikbaar
 
     const volgendeVolgorde = [...volgorde] //De nieuwe volgorde is de vorige volgorde + extra stap
@@ -100,6 +121,7 @@
   }
   
   function startGame() { //Functie die het spelletje start
+    poging++
     volgendeRonde() //Ga naar ronde 1
     $("#startknop").css({"visibility": "hidden"}) //Startknop wordt onzichtbaar
   }

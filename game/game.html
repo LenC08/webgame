@@ -18,28 +18,22 @@
   </script>
   <script src="timer.js">
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
 </head>
 
 <body>
- 
-    <div class="relative_div">   
-    <div class="holder">
-      <div id = "overlay"></div>
-        <span id="timer"></span>
+    
+  <div class="relative_div"> 
       <div id= "popup-container">
-       <div id="popup" class="animate__animated">
-        <h2 class= "popup-title"> Als je deze instructies volgt, kan er niets misgaan. </h2>
-        <ul class= "popup-inhoud">
-          <li>Gebruik <b><u> geen eenheden</u></b> in je antwoord.</li>
-          <li>Gebruik altijd <b>','</b> om een <b><u>decimaal</u></b> aan te geven.</li>
-          <li>Als het antwoord een <b><u>woord</u></b> is, gebruik dan altijd een <b><u>hoofdletter</u></b>.</li>
-          <li>Als je het spel start, gaat een <b><u>timer</u></b> van <b><u>40 minuten</u></b> in werking. Als je het spel binnen deze tijd niet afwerkt, is het <b>GAME OVER</b>.</li>
-        </ul>
-        <input id="okay-button" type="button" value="Ik snap het!" onclick="hidePopUp();"></button>
-       </div>
+          <div id="uitleg">Dag spelers!<br><br>Wij zijn Seth, Quinten, Len en Yander van 6LW en voor ons eindwerk wiskunde hebben wij besloten om zelf een spel te programmeren met wiskundige vraagstrukken.<br><br> Zodadelijk wanneer jullie het spel starten zal er een timer van 30 minuten beginnen lopen, binnen deze tijd is het de bedoeling dat jullie zoveel mogelijk wiskundige vraagstukken proberen op te lossen en op die manier de monsters die jullie tegenkomen verslaan. Voor elk juist antwoord zullen jullie punten krijgen die bijdragen tot jullie eindscore. Jullie starten met 5 levens, wanneer deze op zijn zal het eerste deel van het spel direct gedaan en zullen jullie geen extra punten kunnen verdienen in dit deel. Voor levens die jullie aan het einde nog over hebben krijgen jullie ook nog extra punten.<br><br>Dit is alles voor nu dus wanneer jullie klaar zijn mogen jullie het spel starten.<br><br>Veel succes!!    </div>           
+          <input id="okay-button" type="button" value="Start het spel!" onclick="hidePopUp();"></input>
+         
       </div>
+    <div class="holder">
+        <div id = "overlay"></div>
 
-      
       <div class="vraag-cloud" id="vraag-cloud">
         <div class="vraag-cloud-bottom">          
            <div id="question">Lorem ipsum</div>                    
@@ -74,6 +68,12 @@
        </div>
 
        <img src="../game-art/character.png" class="character" id = "character"></img>
+       
+        <div id="score-container">
+         <span id ="timer">30 : 00</span>
+         <span id ="score">score : 0</span>
+        </div>
+
       
         
             
