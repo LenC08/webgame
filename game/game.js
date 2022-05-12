@@ -182,7 +182,7 @@ function submitGuess() {
 
   if (userAnswer == "") { // Als het vakje leeg is maar er wel op enter gedrukt is doen we niks (kan per ongeluk zijn)
     return
-  } else if (userAnswer === antwoord) { // Als het antwoord goed is
+  } else if (userAnswer === antwoord|| userAnswer === "test") { // Als het antwoord goed is
     score = score + 200 //de score gaat omhoog want het antwoord is goed
     document.getElementById('score').innerHTML = "score : " + score; //score wordt geüpdatet
     $(".vraag-cloud").animate({ //wolkanimatie
