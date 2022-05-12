@@ -1,6 +1,3 @@
-//Timer: is nog niet zichtbaar maar wel al gemaakt
-
-
 function timerStart() {
   let minuut = 30; // We kiezen de duur van de timer
   let seconde = 0;
